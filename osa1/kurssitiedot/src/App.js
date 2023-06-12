@@ -1,5 +1,7 @@
+// Kaikki muuttujat alla
 
-const course = 'Half Stack application development'
+
+
 const part1 = 'Fundamentals of React'
 const exercises1 = 10
 const part2 = 'Using props to pass data'
@@ -7,14 +9,22 @@ const exercises2 = 7
 const part3 = 'State of a component'
 const exercises3 = 14
 
+// Sama mutta toisella tavalla tehtynä.
+// Muutin vaan suoraa taulukkoon ne olioiksi.
 const parts = [
-  {content:part1,exercises:exercises1},
-  {content:part2,exercises:exercises2},
-  {content:part3,exercises:exercises3}
+  {name:part1,exercises:exercises1},
+  {name:part2,exercises:exercises2},
+  {name:part3,exercises:exercises3}
 ]
+
+const course = {
+  name: 'Half Stack application development',
+  parts : parts
+}
 
 const Header = (props) => {
   console.log("Header Called\n",props.course);
+  console.log(props);
   return (
     <div>
       <h1> {props.course} </h1>
@@ -22,14 +32,15 @@ const Header = (props) => {
   )
 }
 
-const Content = () => {
-  console.log("Content called\n")
-  const content = parts
+const Content = (props) => {
+  console.log("Content called\n");
+  console.log(props)
+  const content = props.content
   return (
     <div>
-      <Part name={content[0].content} count={content[0].exercises}/>
-      <Part name={content[1].content} count={content[1].exercises}/>
-      <Part name={content[2].content} count={content[2].exercises}/>
+      <Part name={content[0].name} count={content[0].exercises}/>
+      <Part name={content[1].name} count={content[1].exercises}/>
+      <Part name={content[2].name} count={content[2].exercises}/>
     </div>
   )
 }
@@ -41,8 +52,9 @@ const Part = (props) => {
   )
 }
 
-const Total = () => {
+const Total = (props) => {
   let sum = 0;
+  const parts = props.content
   console.log("Total called\nstarted from",sum);
 
   parts.forEach(sumExercises);
@@ -62,9 +74,9 @@ const App = () => {
 
   return (
     <div>
-      <Header course={course} />
-      <Content />
-      <Total />
+      <Header course={course.name} />
+      <Content content={course.parts} />
+      <Total content={course.parts}/>
     </div>
   )
 }
