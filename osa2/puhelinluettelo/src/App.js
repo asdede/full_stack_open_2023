@@ -1,28 +1,8 @@
-import { useState } from 'react'
-
-
-const Contacts = ({contacts}) => {
-  return (
-    <ul>
-    {contacts.map(contact =>
-      <li key={contact.id}>{contact.name} : {contact.num}</li>)
-    }
-    </ul>
-  )
-}
-
-const checkIfExists = (ogArray,newName) => {
-  console.log(ogArray)
-  const nameArray = ogArray.map(item => item.name);
-  console.log("Checking if",newName,"exists in array")
-  if (nameArray.includes(newName) || newName === "") {
-    console.log("Exists == TRUE")
-    return true
-  }
-  console.log("Exists == FALSE")
-  return false
-
-}
+import { useState } from 'react';
+import Contacts from './components/Contacts';
+import checkIfExists from './components/checkIfExists';
+import AddNums from './components/AddNums';
+import Search from './components/Search';
 
 
 const App = () => {
@@ -35,6 +15,7 @@ const App = () => {
 
   const [newContact, setNewContact] = useState("")
   const [newNum,setNewNum] = useState("");
+  const [filter,setFilter] = useState("");
 
   const addContact = (event) => {
     event.preventDefault();
@@ -60,11 +41,21 @@ const App = () => {
     }
   }
 
+  const numsToShow = filter
+  ? persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase()))
+  : persons;
 
   const handleNumInput = (event) => {
     console.log(event.target.value);
     setNewNum(event.target.value);
   }
+
+  const handleFilter = (event) => {
+    const inputValue = event.target.value;
+    console.log("filter changed")
+    console.log(event.target.value)
+    setFilter(inputValue);
+  };
 
 
   const handleInputChange = (event) => {
@@ -76,28 +67,17 @@ const App = () => {
 
   return (
     <div>
-      <p>Filter: </p>
-      <input></input>
+      <Search filter={filter} handleFilter={handleFilter}/>
       <h2>Phonebook</h2>
       <form onSubmit={addContact} >
-        <table>
-          <tbody>
-            <tr>
-              <td>name:</td>
-              <td><input value={newContact} onChange={handleInputChange}/></td> 
-            </tr>
-            <tr>
-              <td>Number:</td>
-              <td><input value={newNum} onChange={handleNumInput}/></td>
-            </tr>
-          </tbody>
-        </table>
+        <AddNums newContact={newContact} handleInputChange={handleInputChange}
+              newNum={newNum} handleNumInput={handleNumInput}/>
         <div>
           <button type="submit">add</button>
         </div>
       </form>
       <h2>Numbers</h2>
-      <Contacts contacts={persons}/>
+      <Contacts contacts={numsToShow}/>
     </div>
   )
 }

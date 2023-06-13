@@ -13,5 +13,5 @@ ____
 - [x] 2.6 Puhelinluettelo step1
 - [x] 2.7 Puhelinluettelo step2
 - [x] 2.8 Puhelinluettelo step3
-- [ ] 2.9 Puhelinluettelo step4
-- [ ] 2.10 Puhelinluettelo step5
+- [x] 2.9 Puhelinluettelo step4
+- [x] 2.10 Puhelinluettelo step5
