@@ -9,5 +9,9 @@ ____
 - [x] 2.4 Kurssitiedot step9
 - [x] 2.5 Erillinen moduuli
 
-#### Tehtävät 2.6 -
-- [ ] xxxxxxx
+#### Tehtävät 2.6 - 2.10
+- [x] 2.6 Puhelinluettelo step1
+- [x] 2.7 Puhelinluettelo step2
+- [x] 2.8 Puhelinluettelo step3
+- [ ] 2.9 Puhelinluettelo step4
+- [ ] 2.10 Puhelinluettelo step5
