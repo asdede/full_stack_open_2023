@@ -1,18 +1,29 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
+import axios from 'axios';
 import Contacts from './components/Contacts';
 import checkIfExists from './components/checkIfExists';
 import AddNums from './components/AddNums';
 import Search from './components/Search';
 
 
-const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas',id:1, num: '040-123456' },
-    { name: 'Ada Lovelace',id:2, num: '39-44-5323523' },
-    { name: 'Dan Abramov',id:3, num: '12-43-234345' },
-    { name: 'Mary Poppendieck',id:4, num: '39-23-6423122' }
-  ])
 
+  
+
+const App = () => {
+
+  const hook =() => {
+    console.log("effect");
+    axios
+      .get("http://localhost:3001/persons")
+      .then(response => {
+        console.log("fulfilled")
+        setPersons(response.data)
+      })
+  }
+  
+  useEffect(hook,[])
+
+  const [persons, setPersons] = useState([])
   const [newContact, setNewContact] = useState("")
   const [newNum,setNewNum] = useState("");
   const [filter,setFilter] = useState("");
@@ -64,6 +75,9 @@ const App = () => {
     console.log(value)
     setNewContact(value)
   }
+
+
+
 
   return (
     <div>
