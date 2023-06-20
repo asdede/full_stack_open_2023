@@ -4,6 +4,8 @@ import Contacts from './components/Contacts';
 import checkIfExists from './components/checkIfExists';
 import AddNums from './components/AddNums';
 import Search from './components/Search';
+import personServices from './services/persons'
+import { v4 as uuidv4 } from 'uuid';
 
 
 
@@ -13,11 +15,11 @@ const App = () => {
 
   const hook =() => {
     console.log("effect");
-    axios
-      .get("http://localhost:3001/persons")
+    personServices
+      .getAll()
       .then(response => {
-        console.log("fulfilled")
-        setPersons(response.data)
+        console.log(response)
+        setPersons(response)
       })
   }
   
@@ -29,6 +31,7 @@ const App = () => {
   const [filter,setFilter] = useState("");
 
   const addContact = (event) => {
+    console.log("AddContact")
     event.preventDefault();
     console.log(event)
   
@@ -41,7 +44,7 @@ const App = () => {
       console.log("Adding new contact")
       const phonebookObject = {
         name: newContact,
-        id: persons.length + 1,
+        id: uuidv4(),
         num: newNum
       }
       console.log(phonebookObject)
@@ -49,8 +52,32 @@ const App = () => {
       setPersons(persons.concat(phonebookObject))
       setNewContact("")
       setNewNum("")
+      personServices
+        .create(phonebookObject)
+        .then(response => {
+          console.log(response)
+        })
     }
   }
+
+  const handleDelete = (id) => {
+    console.log("Confirmating delete of id:",id);
+    const name = persons.find(person => person.id === id)
+    console.log(name.name)
+    if (window.confirm("Do you really want to delete: " + name.name)) {
+    
+    personServices.del(id)
+      .then(response => {
+        console.log("Contact delted",response)
+        setPersons(persons.filter(person => person.id !== id));
+      })
+      .catch(error => {
+        console.log("Got error while deleting",error)
+      });
+    
+    }
+    
+  };
 
   const numsToShow = filter
   ? persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase()))
@@ -70,13 +97,12 @@ const App = () => {
 
 
   const handleInputChange = (event) => {
+    console.log("handling input change")
     console.log(event.target.value)
     const value = event.target.value;
     console.log(value)
     setNewContact(value)
   }
-
-
 
 
   return (
@@ -91,11 +117,10 @@ const App = () => {
         </div>
       </form>
       <h2>Numbers</h2>
-      <Contacts contacts={numsToShow}/>
+      <Contacts contacts={numsToShow} handleDelete={handleDelete}/>
     </div>
   )
 }
-
 
 
 export default App
