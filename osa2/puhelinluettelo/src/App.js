@@ -9,7 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 
 
-  
+
 
 const App = () => {
 
@@ -22,23 +22,26 @@ const App = () => {
         setPersons(response)
       })
   }
-  
+
   useEffect(hook,[])
 
   const [persons, setPersons] = useState([])
   const [newContact, setNewContact] = useState("")
   const [newNum,setNewNum] = useState("");
   const [filter,setFilter] = useState("");
-
+  const [[errorMsg,msgCode],setErrorMsg] = useState([null,null]);
+  
   const addContact = (event) => {
     console.log("AddContact")
     event.preventDefault();
     console.log(event)
   
     if (checkIfExists(persons,newContact)) {
-      const msg = "Name already exists in database: " + String(newContact) + "\nOr name is blank"  
-      alert(msg)
-      console.log("Name exists, reuturning...")
+      const msg = "Name already exists in database: " + String(newContact) + "\nOr name is blank"
+      setErrorMsg([msg,2])
+      setTimeout(() => {
+        setErrorMsg([null,null])
+      },5000)
     }
     else {
       console.log("Adding new contact")
@@ -57,24 +60,74 @@ const App = () => {
         .then(response => {
           console.log(response)
         })
+      setErrorMsg(["Added person " + newContact,1])
+      setTimeout(() => {
+        setErrorMsg([null,null])
+      },5000)
     }
+  }
+
+  const Notification = ({ message,msgCode }) => {
+    if (message === null) {
+      return null
+    }
+    const errorStyle = {
+      color:"red",
+      fontstyle:"italic",
+      fontSize:16,
+      background:"lightgrey",
+      borderStyle:"solid",
+      borderRadius:5,
+      padding:10
+    }
+    const msgStyle = {
+      color:"green",
+      fontstyle:"italic",
+      fontSize:16,
+      background:"lightgrey",
+      borderStyle:"solid",
+      borderRadius:5,
+      padding:10
+
+    }
+    let divStyle = null
+
+    if (msgCode === 1) {
+      divStyle = msgStyle
+    } else {
+      divStyle = errorStyle
+    }
+    console.log(divStyle)
+    return (
+      <div style={divStyle}>
+      {message}
+    </div>
+    );
   }
 
   const handleDelete = (id) => {
     console.log("Confirmating delete of id:",id);
-    const name = persons.find(person => person.id === id)
+    let name = persons.find(person => person.id === id)
     console.log(name.name)
     if (window.confirm("Do you really want to delete: " + name.name)) {
     
     personServices.del(id)
       .then(response => {
-        console.log("Contact delted",response)
+        console.log("Contact deleted",response)
+        setErrorMsg(["Person succesfully deleted " + name.name,1])
         setPersons(persons.filter(person => person.id !== id));
+        setTimeout(() => {
+          setErrorMsg([null,null])
+        },5000)
       })
       .catch(error => {
-        console.log("Got error while deleting",error)
+        setErrorMsg(
+          'Note '+(persons.find(person => person.id === id)) +' was already deleted from server'
+        )
+        setTimeout(() => {
+          setErrorMsg([null,null])
+        },5000)
       });
-    
     }
     
   };
@@ -95,7 +148,6 @@ const App = () => {
     setFilter(inputValue);
   };
 
-
   const handleInputChange = (event) => {
     console.log("handling input change")
     console.log(event.target.value)
@@ -104,12 +156,12 @@ const App = () => {
     setNewContact(value)
   }
 
-
   return (
     <div>
       <Search filter={filter} handleFilter={handleFilter}/>
       <h2>Phonebook</h2>
-      <form onSubmit={addContact} >
+      <Notification message={errorMsg} msgCode={msgCode}/>
+      <form onSubmit={addContact}>
         <AddNums newContact={newContact} handleInputChange={handleInputChange}
               newNum={newNum} handleNumInput={handleNumInput}/>
         <div>

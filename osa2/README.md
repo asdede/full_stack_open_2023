@@ -26,7 +26,7 @@ ____
 - [ ] 2.15 Puhelinluettelo step10
 
 #### Tehtävät 2.16 - 2.20
-- [ ] 2.16 Puhelinluettelo step11
+- [x] 2.16 Puhelinluettelo step11
 - [ ] 2.17 Puhelinluettelo step12
 - [ ] 2.18 Maiden tiedot step1
 - [ ] 2.19 Maiden tiedot step2
