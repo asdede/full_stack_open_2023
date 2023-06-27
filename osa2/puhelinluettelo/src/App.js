@@ -47,8 +47,7 @@ const App = () => {
       console.log("Adding new contact")
       const phonebookObject = {
         name: newContact,
-        id: uuidv4(),
-        num: newNum
+        number: newNum
       }
       console.log(phonebookObject)
       console.log("Id:",persons.length + 1)
@@ -173,6 +172,5 @@ const App = () => {
     </div>
   )
 }
-
 
 export default App

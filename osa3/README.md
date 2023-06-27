@@ -1,0 +1,1 @@
+Osa 3 tehtävät erillisessä repossa osoitteessa : https://github.com/asdede/fullstack_open_osa3

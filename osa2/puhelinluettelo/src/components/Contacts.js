@@ -7,7 +7,7 @@ const Contacts = ({contacts,handleDelete}) => {
     return (
       <ul>
       {contacts.map(contact =>
-        <li key={contact.id}>{contact.name} : {contact.num} 
+        <li key={contact.id}>{contact.name} : {contact.number} 
         <button button_id={contact.id} onClick={() => handleDelete(contact.id)}>Delete</button>
         </li>)
       }
