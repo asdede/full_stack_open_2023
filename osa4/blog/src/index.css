@@ -1,0 +1,60 @@
+h2 {
+  color:green;
+}
+
+body {
+  text-align: center;
+  background-color: aliceblue;
+  align-items: center;
+}
+
+.description {
+  font-style: italic;
+}
+
+.titlebox {
+  margin-bottom: 150px;
+}
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: center;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #E5F5FF; /* Light Blue */
+}
+
+tr {
+  background-color: #F0FAFF; /* Pale Blue */
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+button {
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 100px;
+  color: white;
+  padding: 10px 50px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: chartreuse;
+}
