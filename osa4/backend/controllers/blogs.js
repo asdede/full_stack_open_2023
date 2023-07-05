@@ -25,28 +25,28 @@ blogRouter.get('/', (request, response) => {
   }); 
   
   // ------- Post new
-  blogRouter.post('/', (request, response) => {
+  blogRouter.post('/', async (request, response) => {
     const blog = new Blog(request.body)
     console.log(blog)
   
-    blog
-      .save()
-      .then(result => {
-        response.status(201).json(result)
-      })
+    const savedBlog = await blog.save();
+    response.status(201).json(savedBlog)
   });
   
   // ------ DELETE by id 
-  blogRouter.delete('/:id', (req, res) => {
-    const {id} = req.params;
-    logger.info(`Deleting object with id of ${id}`)
-    Blog.findByIdAndRemove(id)
-      .then((result) => {
-        res.status(204).end();
-      })
-      .catch((error) => next(error))
+  blogRouter.delete('/:id', async (req, res) => {
+    try {
+      const { id } = req.params;
+      logger.info(`Deleting object with id of ${id}`);
+      await Blog.findByIdAndRemove(id);
+      res.status(204).json().end();
+    } catch (error) {
+      // Handle the error
+      console.error('Error occurred while deleting the blog:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
   });
-  
+
   // ------ UPDATE
   blogRouter.put('/:id', async (req,res,next) => {
     console.log("Updating data")

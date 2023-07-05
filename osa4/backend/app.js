@@ -10,7 +10,6 @@ const blogRouter = require('./controllers/blogs')
 
 const app = express()
 
-
 morgan.token('requestData', (req) => JSON.stringify(req.body));
 
 logger.info("Connecting mongoose")
