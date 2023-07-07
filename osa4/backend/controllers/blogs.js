@@ -1,13 +1,16 @@
 const blogRouter = require('express').Router()
 const Blog = require('../models/blog')
+const User = require('../models/user')
+const tokenExtractor = require('../middleware/tokenExtractor');
+const jwt = require('jsonwebtoken')
+
+blogRouter.use(tokenExtractor);
 
 // ----- Get all
-blogRouter.get('/', (request, response) => {
-    Blog
-      .find({})
-      .then(blogs => {
-        response.json(blogs)
-      })
+blogRouter.get('/',async  (request, response) => {
+  const blogs = await Blog
+    .find({}).populate('user',{username:1,name:1,id:1})
+    response.json(blogs)
   })
   
   // ------- Get by id
@@ -26,10 +29,24 @@ blogRouter.get('/', (request, response) => {
   
   // ------- Post new
   blogRouter.post('/', async (request, response) => {
-    const blog = new Blog(request.body)
-    console.log(blog)
+    const body = request.body
+    if (!request.token) {
+      return response.status(401).json({error: 'invalid token'})
+    }
+    const token = jwt.verify(request.token,process.env.SECRET)
+    const user = await User.findById(token.id)
+    console.log(user)
+    const blog = new Blog({
+      title:body.title,
+      author:body.author,
+      user:user.id,
+      url:body.url,
+      likes: body.likes
+    })
   
     const savedBlog = await blog.save();
+    user.blogs = user.blogs.concat(savedBlog._id)
+    await user.save()
     response.status(201).json(savedBlog)
   });
   
@@ -37,7 +54,14 @@ blogRouter.get('/', (request, response) => {
   blogRouter.delete('/:id', async (req, res) => {
     try {
       const { id } = req.params;
-      logger.info(`Deleting object with id of ${id}`);
+      const blog = await Blog.findById(id);
+      const userid = blog.user;
+      const token = jwt.verify(req.token, process.env.SECRET);
+      const tokenUserId = token.id;
+      if ( tokenUserId !== userid.toString()) {
+        return res.status(401).json({error: "No acces"})
+      }
+      console.log("Deleting object")
       await Blog.findByIdAndRemove(id);
       res.status(204).json().end();
     } catch (error) {

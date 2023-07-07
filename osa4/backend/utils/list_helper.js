@@ -1,4 +1,4 @@
-
+const User = require('../models/user')
 const dummy = (blogs => 1);
 
 const total = (blogs) => {
@@ -89,12 +89,25 @@ const mostLikes = (array) => {
   return maxLikes
 
 }
+const usersInDb = async () => {
+  const users = await User.find({})
+  return users.map(u => u.toJSON())
+}
 
+const jwt = require('jsonwebtoken');
+
+const generateToken = (userId) => {
+  // Generate a token with the desired payload and secret
+  const token = jwt.sign({ id: userId }, process.env.SECRET);
+  return token;
+};
 
 module.exports = {
   dummy,
   total,
   favorite,
   mostBlogs,
-  mostLikes
+  mostLikes,
+  usersInDb,
+  generateToken
 }
