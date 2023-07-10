@@ -1,0 +1,10 @@
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjY0YTc5ZTU3NGI4YjkyZTE0MzA5YWNmZCIsImlhdCI6MTY4ODc1OTIxMX0.LmAQE7Eio96Hzy-7PEW2U2RvvzZsrLCoOcKYJLDxUJA
+
+{
+    "title":"tokentest",
+    "author":"tester112223",
+    "url":"www.aasddssdssaadd.aaaa.2",
+    "likes":"8"
+}
