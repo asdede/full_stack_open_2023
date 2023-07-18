@@ -104,7 +104,7 @@ test('likes called twice when pressed twice', async () => {
   const button = screen.getByText('View')
   await simUser.click(button)
 
-  const likeBtn = screen.getByRole('button', { name: 'Like' });
+  const likeBtn = screen.getByRole('button', { name: 'Add Like' });
   await simUser.click(likeBtn)
   await simUser.click(likeBtn)
 

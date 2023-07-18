@@ -35,7 +35,6 @@ blogRouter.get('/',async  (request, response) => {
     }
     const token = jwt.verify(request.token,process.env.SECRET)
     const user = await User.findById(token.id)
-    console.log(user.id)
     const blog = new Blog({
       title:body.title,
       author:body.author,

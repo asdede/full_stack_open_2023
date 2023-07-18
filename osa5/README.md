@@ -19,3 +19,10 @@ kerkesin vähä edellisessä jo alottaa frontendi tekoa kun oli hauskaa, joten t
 - [x] 5.14
 - [x] 5.15
 - [-] 5.16
+- [x] 5.17
+- [x] 5.18
+- [x] 5.19
+- [x] 5.20
+- [x] 5.21
+- [x] 5.22
+- [x] 5.23

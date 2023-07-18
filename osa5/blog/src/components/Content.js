@@ -31,14 +31,14 @@ const Content = ({ blogs,handleLikes,user }) => {
                     <th>Url</th>
                     <th>Added by</th>
                     <th>Likes</th>
-                    <th>Like</th>
+                    <th></th>
                   </tr>
                   <tr>
                     <td className="author" >{blog.author}</td>
                     <td className='url'>{blog.url}</td>
                     <td className='username'>{blog.user.name}</td>
                     <td className='likes'>{blog.likes}</td>
-                    <td><button name='Like' onClick={() => handleLikes(blog.id,{ likes:1 })}>Like</button></td>
+                    <td><button className='blogLikeBtn' name='Like' onClick={() => handleLikes(blog.id,{ likes:1 })}>Add Like</button></td>
                   </tr>
                 </table>
 
