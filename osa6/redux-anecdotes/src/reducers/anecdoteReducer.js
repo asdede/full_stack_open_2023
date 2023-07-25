@@ -17,8 +17,6 @@ const asObject = (anecdote) => {
   }
 }
 
-
-
 const initialState = anecdotesAtStart.map(asObject)
 
 const reducer = (state = initialState, action) => {
@@ -38,7 +36,7 @@ const reducer = (state = initialState, action) => {
       return  [...state,newPost]
     }
   
-  return state
+  return state.sort((a,b) => b.votes - a.votes)
 }
 
 export const votePost = (id) => {
