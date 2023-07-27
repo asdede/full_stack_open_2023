@@ -1,3 +1,5 @@
+import { createSlice } from '@reduxjs/toolkit'
+
 const anecdotesAtStart = [
   'If it hurts, do it more often',
   'Adding manpower to a late software project makes it later!',
@@ -19,6 +21,26 @@ const asObject = (anecdote) => {
 
 const initialState = anecdotesAtStart.map(asObject)
 
+const anecdoteSlice = createSlice({
+  name:'posts',
+  initialState,
+  reducers: {
+    createPost(state,action) {
+      const post = asObject(action.payload)
+      state.push(post)
+    },
+    votePost(state,action) {
+
+      const id = action.payload
+      const data = state.map((p) => p.id === id ? {
+        ...p,votes: p.votes + 1 
+      }:p)
+      return data.sort((a,b) => b.votes - a.votes)
+    }
+  },
+})
+
+/*
 const reducer = (state = initialState, action) => {
   console.log('state now: ', state)
   console.log('action', action)
@@ -38,7 +60,8 @@ const reducer = (state = initialState, action) => {
   
   return state.sort((a,b) => b.votes - a.votes)
 }
-
+*/
+/* 
 export const votePost = (id) => {
   // Adds like to post
   return {
@@ -46,7 +69,8 @@ export const votePost = (id) => {
     payload: {id}
   }
 }
-
+*/
+/*
 export const createPost = (content) => {
   console.log(content)
   // Adds new post
@@ -55,5 +79,8 @@ export const createPost = (content) => {
     payload: content
   }
 }
+*/
+console.log((anecdoteSlice.actions))
 
-export default reducer
+export const { createPost, votePost } = anecdoteSlice.actions
+export default anecdoteSlice.reducer

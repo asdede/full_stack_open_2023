@@ -1,6 +1,7 @@
-import { createPost } from './../reducers/anecdoteReducer'
 import { useDispatch } from 'react-redux'
 import { useState } from 'react'
+import { createPost } from './../reducers/anecdoteReducer'
+import { setNotification } from './../reducers/notificationReducer'
 
 
 const AnecdoteForm = () => {
@@ -14,6 +15,8 @@ const AnecdoteForm = () => {
     const post = (event) => {
       event.preventDefault()
       dispatch(createPost(content))
+      const msg = `Created new anecdote: "${content}"`
+      dispatch(setNotification(msg))
       setContent('')
     }
     return (
