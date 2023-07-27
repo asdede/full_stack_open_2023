@@ -16,7 +16,7 @@ const AnecdoteForm = () => {
       event.preventDefault()
       dispatch(createPost(content))
       const msg = `Created new anecdote: "${content}"`
-      dispatch(setNotification(msg))
+      dispatch(setNotification(msg,5))
       setContent('')
     }
     return (

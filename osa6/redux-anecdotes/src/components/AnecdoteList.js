@@ -17,7 +17,7 @@ const AnecdoteList = () => {
         console.log('vote', id)
         dispatch(votePost(id))
         const msg = `You voted "${postname}"`
-        dispatch(setNotification(msg))
+        dispatch(setNotification(msg,5))
     }
 
     return (

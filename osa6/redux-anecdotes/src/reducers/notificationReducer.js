@@ -18,12 +18,12 @@ const notificatonSlice = createSlice({
 
 export const {notiChange,setNull} = notificatonSlice.actions
 
-export const setNotification = (msg) => (dispatch) => {
+export const setNotification = (msg,time) => (dispatch) => {
     dispatch(notiChange(msg));
 
     setTimeout(() => {
         dispatch(setNull());
-    },5000)
+    },time * 1000)
 }
 
 export default notificatonSlice.reducer
